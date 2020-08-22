@@ -14,8 +14,8 @@ app.use(express.json());
 
 // reservation (DATA)
 // =============================================================
-var reservations = [];
-var waitlist = []
+var waitlist = [];
+var tables = [];
 
 
 // Routes
@@ -31,20 +31,25 @@ app.get("/reserve", function(req, res) {
 });
 
 // Displays all tables and waitlist
-app.get("/api/dispres", function(req, res) {
-    return res.json(dispres);
+app.get("/api/tables", function(req, res) {
+    return res.json(tables);
+});
+
+// Display waitlist
+app.get("/api/waitlist", function(req, res) {
+    return res.json(waitlist);
 });
 
 // Create New Reservation - takes in JSON input
-app.post("/api/newres", function(req, res) {
+app.post("/api/tables", function(req, res) {
     // req.body hosts is equal to the JSON post sent from the user
     // This works because of our body parsing middleware
     var newReservation = req.body;
 
     console.log(newReservation);
 
-    if (reservations.length < 4) {
-        reservations.push(newReservation);
+    if (tables.length <= 4) {
+        tables.push(newReservation);
     } else {
         waitlist.push(newReservation);
     }
